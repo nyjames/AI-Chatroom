@@ -11,18 +11,18 @@ This is a real-time chat application built with Flask and Flask-SocketIO. It sup
 
 ---
 
-## 🚀 Features
+## Features
 
 - **GPT Integration** — Ask the bot anything by mentioning `@bot` in a chat.
 - **User Authentication** — Register, log in, and log out securely.
 - **Real-Time Messaging** — Powered by WebSockets using Flask-SocketIO.
 - **Chat History** — Stores messages per room in a SQLite database.
 - **Multiple Rooms** — Chat in different rooms by switching via query params.
-- 👥 **Dynamic User Lists** — Shows active users per room in real time.
+- **Dynamic User Lists** — Shows active users per room in real time.
 
 ---
 
-## 🧭 App Flow
+## App Flow
 
 1. Users register or log in.
 

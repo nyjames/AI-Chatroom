@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> My Page </title>
+  <link rel="stylesheet" href="static/index.css">
+
+</head>
+<body>
+
+  
+  <form action="{{ url_for('chat') }}" method="get">
+    <h1> Chat Room </h1>
+    <h4> Enter your chat room name to join </h4>
+
+    <input type="text" name="room" placeholder="Enter room name">
+    <button type="submit">Join Chat</button>
+
+  </form>
+
+</body>
+
+
+</html>

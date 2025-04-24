@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room</title>
+    <link rel="stylesheet" href="static/chat.css">
+
+
+</head>
+<body>
+    <h1>Welcome to chat room {{ room }}</h1>
+
+    <!-- Toggle button -->
+    <button id="toggle_users_button">Show Users</button>
+
+    <!-- Collapsible user panel -->
+    <div id="user-panel" style="display: none;">
+        <h4>Users in Room:</h4>
+        <ul id="user_list"></ul>
+    </div>
+
+    <!-- Populate messages -->
+
+    <div id="messages">
+
+        <div id="messages">
+            {% for message in messages %}
+                <div>{{ message.username }}: {{ message.message }}</div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+
+     <!-- Submit messages -->
+    <form id="message_input_form">
+        <input type="text" id="message_input" placeholder="Enter your message here">
+        <button type="submit">Send</button>
+    </form>
+
+    <!-- Leave room -->
+
+    <button id="leave_room_button" class="btn btn-danger">Leave Room</button>
+
+    <!-- Connecting socket.io -->
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+
+    <script>
+        
+        const socket = io();
+
+        // Join the room
+        socket.on('connect', function () {
+            socket.emit('join_room', {
+                username: "{{ username }}",
+                room: "{{ room }}"
+            });
+        });
+
+        // Handle message sending
+        let message_input = document.getElementById('message_input');
+        document.getElementById('message_input_form').onsubmit = function (e) {
+            e.preventDefault();
+
+            let message = message_input.value.trim();
+
+            if (message.length) {
+                socket.emit('send_message', {
+                    username: "{{ username }}",
+                    room: "{{ room }}",
+                    message: message
+                });
+            }
+
+            message_input.value = '';
+            message_input.focus();
+        }
+
+        // Receive messages
+        socket.on('receive_message', function (data) {
+            const newNode = document.createElement('div');
+            newNode.classList.add('message');
+
+            // Add a class for the bot's messages
+            if (data.username === 'ChatBot 🤖') {
+                newNode.classList.add('bot');
+            }
+
+            newNode.innerHTML = `<strong>${data.username}:</strong> ${data.message}`;
+            document.getElementById('messages').appendChild(newNode);
+            scrollToBottom();
+        });
+
+
+
+        // Announce when someone joins the room
+        socket.on('join_room_announcement', function (data) {
+            const newNode = document.createElement('div');
+            newNode.innerHTML = data.username + ' has joined the room';
+            document.getElementById('messages').appendChild(newNode);
+            scrollToBottom();
+
+        });
+
+        socket.on('leave_room_announcement', function (data) {
+            console.log(data);
+            const newNode = document.createElement('div');
+            newNode.innerHTML = data.username + ' has left the room';
+            document.getElementById('messages').appendChild(newNode);
+            scrollToBottom();
+
+        });
+
+        // Automatically scroll to the most recent message
+
+        function scrollToBottom() {
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // Update User list
+        socket.on('update_user_list', function(userList) {
+            const userListEl = document.getElementById('user_list');
+            userListEl.innerHTML = '';
+            userList.forEach(user => {
+                const li = document.createElement('li');
+                li.textContent = user;
+                userListEl.appendChild(li);
+        });
+
+       // Leave room
+        document.getElementById('leave_room_button').addEventListener('click', function() {
+    
+        socket.emit('leave_room', {
+            username: "{{ username }}",
+            room: "{{ room }}"
+        });
+
+        // Redirect to Chat Room Lobby or another page after leaving the room
+        window.location.href = '/';
+        });
+
+    // Show User List
+    
+    document.getElementById('toggle_users_button').addEventListener('click', function () {
+            const panel = document.getElementById('user-panel');
+            const button = this;
+
+            if (panel.style.display === 'none') {
+                panel.style.display = 'block';
+                button.textContent = 'Hide Users';
+            } else {
+                panel.style.display = 'none';
+                button.textContent = 'Show Users';
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

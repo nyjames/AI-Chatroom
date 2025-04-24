@@ -1,0 +1,81 @@
+/* General Reset & Layout */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #e3ecf3, #f6f9fc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Card container */
+form {
+    background-color: white;
+    padding: 40px 50px;
+    border-radius: 10px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 350px;
+    box-sizing: border-box;
+}
+
+/* Header */
+h1 {
+    font-size: 2rem;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h4 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Inputs */
+input {
+    padding: 14px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+    background-color: #f9f9f9;
+}
+
+
+input:focus {
+    border-color: #3498db;
+    background-color: #fff;
+    outline: none;
+}
+
+/* Submit button */
+button{
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 14px;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+/* Optional: Subtle fade on load */
+body {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

@@ -17,7 +17,8 @@ load_dotenv()
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
-client = OpenAI(api_key="openai_api_key")
+client = OpenAI(api_key=openai_api_key)
+
 
 # starting flask app
 
@@ -43,8 +44,6 @@ socketio = SocketIO(app)
 login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.init_app(app)
-
-# DB functions
 
 
 # Message Model 
@@ -150,6 +149,7 @@ def logout():
 # homepage / login
 
 @app.route('/')
+
 def home():
     return render_template("index.html")
 

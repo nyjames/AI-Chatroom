@@ -103,6 +103,8 @@
             scrollToBottom();
 
         });
+        
+         // Announce when someone leaves the room
 
         socket.on('leave_room_announcement', function (data) {
             console.log(data);

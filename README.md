@@ -76,7 +76,7 @@ Make sure you have a valid API key and proper billing set up at [OpenAI Platform
 
 ## License
 
-MIT License. See `LICENSE` file for details.
+MIT License.
 
 ---
 
